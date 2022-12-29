@@ -2,13 +2,14 @@
 const { default: inquirer } = require("inquirer");
 const fs =require('fs');
 
-function createHTML(userinfo) {
+function createREADME(userinfo) {
     const {
         Title,
-        location,
-        bio,
-        linkedInURL,
-        GitHubURL,
+        Description,
+        Installation,
+        usage,
+        Contributing,
+        Tests,
     } = userinfo;
 
     return ` 
@@ -20,14 +21,18 @@ function createHTML(userinfo) {
     # Table of Contents
 
     # Installation
+    ${Installation}
 
     # Usage
+    ${usage}
 
     # License
 
     # Contributing
+    ${Contributing}
 
     # Tests
+    ${Tests}
 
     # Questions
 
@@ -57,12 +62,12 @@ function askQuestions() {
             type: 'editor'
         },
         {
-            name: `contribution guidlines`,
+            name: `Contributing`,
             message: 'enter contribution guidlines',
             type: 'editor'
         },
         {
-            name: `test instrucions`,
+            name: `tests`,
             message: 'please enter test instructions',
             type: 'editor'
         },

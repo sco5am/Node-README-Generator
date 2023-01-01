@@ -1,94 +1,77 @@
 // TODO: Include packages needed for this application
-const { default: inquirer } = require("inquirer");
-const fs =require('fs');
+const inquirer = require('inquirer');
+const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown.js');
 
-function createREADME(userinfo) {
-    const {
-        Title,
-        Description,
-        Installation,
-        usage,
-        Contributing,
-        Tests,
-    } = userinfo;
-
-    return ` 
-    # ${Title}
-    
-    # Description
-    ${Description}
-
-    # Table of Contents
-
-    # Installation
-    ${Installation}
-
-    # Usage
-    ${usage}
-
-    # License
-
-    # Contributing
-    ${Contributing}
-
-    # Tests
-    ${Tests}
-
-    # Questions
-
-    `
-}
 // TODO: Create an array of questions for user input
-function askQuestions() {
-    return inquirer.prompt([
-        {
-            name: `Title`,
-            message: 'What is the name of your Project?',
-            type: 'input'
-        },
-        {
-            name: `Descrpition`,
-            message: 'Please write a discription of your project',
-            type: 'editor'
-        },
-        {
-            name: `Installation`,
-            message: 'Please enter instalation intructions',
-            type: 'editor'
-        },
-        {
-            name: `Usage`,
-            message: 'please enter usage information',
-            type: 'editor'
-        },
-        {
-            name: `Contributing`,
-            message: 'enter contribution guidlines',
-            type: 'editor'
-        },
-        {
-            name: `tests`,
-            message: 'please enter test instructions',
-            type: 'editor'
-        },
-    ]);
-};
-//const questions = [];
+const questions = [
+    {
+        type: 'input',
+        message: "What is the title of your Project?",
+        name: 'title',
+    },
+    {
+        type: 'input',
+        message: "Please write a description of your project",
+        name: 'description',
+    },
+    {
+        type: 'input',
+        message: "Please decribe the usage instructions and examples for your project",
+        name: 'usage',
+    },
+    {
+        type: 'input',
+        message: "Please decribe the installation steps of your project",
+        name: 'installation',
+    },
+    {
+        type: 'input',
+        message: "Provide some guidelines for how other developers can contribute to your project",
+        name: 'contributing',
+    },
+    {
+        type: 'input',
+        message: "Please provide any tests written for this project",
+        name: 'tests',
+    },
+    {
+        type: 'list',
+        message: "Please select a license for your project",
+        choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'The Unlicense'],
+        name: 'license',
+    },
+    {
+        type: 'input',
+        message: "What is your GitHub username?",
+        name: 'github',
+    },
+    {
+        type: 'input',
+        message: "What is your email?",
+        name: 'email',
+    },
+];
 
 // TODO: Create a function to write README file
-function writeToFile(md) {
-    fs.writeFile('README.md', md, (err) => {
-        err
-        ? console.log(err)
-        : console.Console.log('done');
-    })
-}
+
 
 // TODO: Create a function to initialize app
 function init() {
-    askQuestions()
-    .then(createREADME)
-    .then(writeToFile)
+    return inquirer.prompt(questions)
+        .then((answers) => {
+            const mark = generateMarkdown(answers)
+            fs.writeFile('README.md', mark, (err) => {
+                err 
+                ? console.log(err)
+                : console.log('done');
+            } )
+            //console.log(mark)
+            //return answers
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 }
 
 // Function call to initialize app

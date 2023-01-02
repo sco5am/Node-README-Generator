@@ -1,9 +1,10 @@
-// TODO: Include packages needed for this application
+// here we include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require("fs");
 const Markdown = require("./utils/generateMarkdown.js");
 
-// TODO: Create an array of questions for user input
+// these are the questions that will be asked of the user to fill out the
+// generateMarkdown method in generateMarkdown.js 
 const questions = [
   {
     type: "input",
@@ -41,7 +42,7 @@ const questions = [
     type: "list",
     message: "Please select a license for your project",
     choices: [
-      "GNUGPLv3",
+      "GNUAGPLv3",
       "MozillaPublicLicense",
       "ApacheLicense",
       "MIT",
@@ -60,19 +61,18 @@ const questions = [
   },
 ];
 
-// TODO: Create a function to write README file
-
-// TODO: Create a function to initialize app
+//this function will initialize the app
 function init() {
   return inquirer
+  // here we prompt the user with questions...
     .prompt(questions)
     .then((answers) => {
-      const mark = Markdown.generateMarkdown(answers);
-      fs.writeFile("README.md", mark, (err) => {
+      //... then we import the markdown class and generateMarkdown method
+      //in order to write our file with the answers provided 
+      const read = Markdown.generateMarkdown(answers);
+      fs.writeFile("READMEexample.md", read, (err) => {
         err ? console.log(err) : console.log("done");
       });
-      //console.log(mark)
-      //return answers
     })
     .catch((error) => {
       console.log(error);

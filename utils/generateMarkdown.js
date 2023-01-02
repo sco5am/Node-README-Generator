@@ -1,8 +1,7 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-
-// If there is no license, return an empty string
-
+// here we create the class markdown that we will later refer to in the index.js file
 class Markdown {
+  // this method contains a object with several diffrent badges within
+  // we then return the badge that matches the value passed through 
   static renderLicenseBadge(license) {
     const badges = {
       GNUAGPLv3: '[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)',
@@ -12,9 +11,8 @@ class Markdown {
     }
     return badges[license]
   }
-
-  // TODO: Create a function that returns the license link
-  // If there is no license, return an empty string
+  // similar to above, we create a method containing various license links
+  // then return the matching link
   static renderLicenseLink(license) {
     const links = {
       GNUAGPLv3: "[GNUAGPLv3](https://choosealicense.com/licenses/gpl-3.0/)",
@@ -26,18 +24,14 @@ class Markdown {
     };
     return links[license];
   }
-
-  // TODO: Create a function that returns the license section of README
-  // If there is no license, return an empty string
+  // this will allow us to render a license section in the README
   static renderLicenseSection(license) {
     if (license) {
       return `Licensed under the ${this.renderLicenseLink(license)} license`;
-    } else {
-      return "";
-    }
+    } 
   }
 
-  // TODO: Create a function to generate markdown for README
+  // this will generate our README content, taking the answers from index.js and inputing them
   static generateMarkdown(answers) {
     return `
 # ${answers.title}
@@ -49,9 +43,9 @@ ${this.renderLicenseBadge(answers.license)}
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [Installation](#installation)
-- [Questions](#questions)
 - [Tests](#tests)
 - [License](#license)
+- [Questions](#questions)
 
 ## Descriptions
 ${answers.description}
@@ -65,16 +59,19 @@ ${answers.installation}
 ## Contributing
 ${answers.contributing}
   
-## Questions
-${answers.email}
-${answers.github}
-
 ## Tests
 ${answers.tests}
 
 ## License
 ${this.renderLicenseSection(answers.license)}
+
+## Questions
+- Email: ${answers.email}
+
+- GitHub: ${answers.github}
+
 `;
   }
 }
+// here we export our class
 module.exports = Markdown;
